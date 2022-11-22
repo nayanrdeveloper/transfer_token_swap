@@ -1,13 +1,18 @@
 import Image from "next/image";
 import React, { useState, Fragment } from "react";
 import { Listbox, Transition } from "@headlessui/react";
-import { useNetwork, useSwitchNetwork } from 'wagmi'
+import { useNetwork, useSwitchNetwork } from "wagmi";
 
 function TabBox() {
-  const { chain } = useNetwork()
+  interface networkStruct {
+    name: string;
+    image: string;
+    networkId: number;
+  }
+  const { chain } = useNetwork();
   const { chains, error, isLoading, pendingChainId, switchNetwork } =
-    useSwitchNetwork()
-  const networks = [
+    useSwitchNetwork();
+  const networks: networkStruct[] = [
     {
       name: "Cello",
       image: "/cello.png",
@@ -44,7 +49,7 @@ function TabBox() {
         </ul>
         <div className="mt-8 flex flex-col gap-4">
           <div className="bg-[#282E3C] p-3 flex flex-col gap-4 rounded-lg">
-          <label className="text-white">Network</label>
+            <label className="text-white">Network</label>
             <Listbox value={selected} onChange={setSelected}>
               <div className="relative mt-1">
                 <Listbox.Button className="relative w-full cursor-default rounded-lg bg-[#3E4350] text-white py-2 pl-3 pr-10 text-left shadow-md focus:outline-none focus-visible:border-indigo-500 focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75 focus-visible:ring-offset-2 focus-visible:ring-offset-orange-300 sm:text-sm">
