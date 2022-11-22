@@ -1,23 +1,32 @@
 import Image from "next/image";
 import React, { useState, Fragment } from "react";
 import { Listbox, Transition } from "@headlessui/react";
+import { useNetwork, useSwitchNetwork } from 'wagmi'
 
 function TabBox() {
+  const { chain } = useNetwork()
+  const { chains, error, isLoading, pendingChainId, switchNetwork } =
+    useSwitchNetwork()
   const networks = [
     {
       name: "Cello",
       image: "/cello.png",
-      networkId: 1,
+      networkId: 44_787,
     },
     {
       name: "Matic",
       image: "/matic_mumbai.png",
-      networkId: 2,
+      networkId: 80_001,
     },
     {
       name: "Goerli",
       image: "/goerli.jpeg",
-      networkId: 3,
+      networkId: 5,
+    },
+    {
+      name: "CoinEx",
+      image: "/coinex.svg",
+      networkId: 53,
     },
   ];
   const [selected, setSelected] = useState(networks[0]);
@@ -73,6 +82,7 @@ function TabBox() {
                               className={`block truncate flex gap-2 ${
                                 selected ? "font-medium" : "font-normal"
                               }`}
+                              onClick={() => switchNetwork?.(network.networkId)}
                             >
                               <Image
                                 src={network.image}
