@@ -1,7 +1,20 @@
 import Image from "next/image";
 import React, { useState, Fragment } from "react";
 import { Listbox, Transition } from "@headlessui/react";
-import { useNetwork, useSwitchNetwork } from "wagmi";
+import { Contract, utils } from "ethers";
+import {
+  useNetwork,
+  useSwitchNetwork,
+  useContractWrite,
+  usePrepareContractWrite,
+  useContract,
+  useProvider,
+  usePrepareSendTransaction,
+  useSendTransaction,
+  useWaitForTransaction,
+  useSigner,
+} from "wagmi";
+import TransferAbi from "../../contractAbi/transfer";
 
 function TabBox() {
   interface networkStruct {
@@ -9,19 +22,49 @@ function TabBox() {
     image: string;
     networkId: number;
   }
+
   const { chain } = useNetwork();
   const { chains, error, isLoading, pendingChainId, switchNetwork } =
     useSwitchNetwork();
+  const provider = useProvider();
+  const { data: signer } = useSigner();
+
+  const contract = useContract({
+    address: process.env.NEXT_PUBLIC_TRANSFER_CONTRACT,
+    abi: TransferAbi,
+    signerOrProvider: signer,
+  });
+
+  const transfetToken = async () => {
+    // const transaction = signer?.sendTransaction({
+    //   to: "0x78CbEcC95172Aacb79F60Ae3d1f074D2e48207c4",
+    //   value: utils.parseEther("0.01"),
+    // });
+    const parsedAmount = await utils.parseEther(0.001.toString())
+    const contractTransaction = await contract?.addTransactionBlock(
+      "0x78CbEcC95172Aacb79F60Ae3d1f074D2e48207c4",
+      // parsedAmount,
+      "Hello Nayan",
+      "mumbai",
+      {
+        gasLimit: 5000000,
+        value: parsedAmount,
+
+      }
+    );
+    await contractTransaction.wait();
+  };
+
   const networks: networkStruct[] = [
     {
       name: "Cello",
       image: "/cello.png",
-      networkId: 44_787,
+      networkId: 44787,
     },
     {
       name: "Matic",
       image: "/matic_mumbai.png",
-      networkId: 80_001,
+      networkId: 80001,
     },
     {
       name: "Goerli",
@@ -121,7 +164,11 @@ function TabBox() {
               className="rounded-md h-10 w-80 bg-[#3E4350] border-2 border-[#444B59] text-white p-2"
             />
           </div>
-          <button className="px-4 py-3 bg-[#1979B9] rounded-md text-white">
+          <button
+            className="px-4 py-3 bg-[#1979B9] rounded-md text-white"
+            // disabled={!write}
+            onClick={() => transfetToken()}
+          >
             Transfer
           </button>
         </div>

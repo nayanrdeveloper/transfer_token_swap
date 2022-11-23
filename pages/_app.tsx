@@ -23,7 +23,7 @@ import { WalletConnectConnector } from "wagmi/connectors/walletConnect";
 
 const avalancheChain: Chain[] = [
   {
-    id: 80_001,
+    id: 80001,
     name: 'Mumbai',
     network: 'mumbai',
     nativeCurrency: {
@@ -40,7 +40,7 @@ const avalancheChain: Chain[] = [
     testnet: true,
   },
   {
-    id: 44_787,
+    id: 44787,
     name: 'Celo (Alfajores Testnet)',
     network: 'celo alfajores',
     nativeCurrency: {

@@ -1,0 +1,33 @@
+{
+  "name": "transfer_business_contract",
+  "version": "1.0.0",
+  "description": "Transfer smart contract deploy",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/nayanrdeveloper/transfer_token_swap.git"
+  },
+  "keywords": [
+    "Transfer",
+    "solidity",
+    "swap",
+    "faceut",
+    "matic",
+    "cello"
+  ],
+  "author": "Nayan Radadiya",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/nayanrdeveloper/transfer_token_swap/issues"
+  },
+  "homepage": "https://github.com/nayanrdeveloper/transfer_token_swap#readme",
+  "dependencies": {
+    "hardhat": "^2.12.2"
+  },
+  "devDependencies": {
+    "@nomicfoundation/hardhat-toolbox": "^2.0.0"
+  }
+}
